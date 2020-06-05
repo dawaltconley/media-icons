@@ -6,7 +6,7 @@ $circle-size: 1.5 !default;
  * Icons
  */
 
-.icon-circle {
+%icon-circle {
     line-height: $circle-size;
     text-align: center;
     border-radius: 50%;
@@ -181,7 +181,7 @@ ul.media-icon-shutter {
 }
 
 .media-icon-circle .media-icon {
-    @extend .icon-circle;
+    @extend %icon-circle;
 
     &:not(:hover) {
         @extend %reset-color, %reset-background-color, %reset-border-color;
