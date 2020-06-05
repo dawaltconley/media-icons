@@ -128,15 +128,19 @@ module.exports = class iconTags {
 
     nunjucks (eleventyConfig) {
         const { tags, parsers, makeIcon, makeIcons } = this;
-        eleventyConfig.addNunjucksTag(tags[0], function(nunjucks) {
-            this.tags = tags[0];
-            this.parse = parsers.nunjucks;
-            this.run = (...args) => new nunjucks.runtime.SafeString(makeIcon(...args));
+        eleventyConfig.addNunjucksTag(tags[0], function (nunjucks) {
+            return new function () {
+                this.tags = [ tags[0] ];
+                this.parse = parsers.nunjucks;
+                this.run = (...args) => new nunjucks.runtime.SafeString(makeIcon(...args));
+            }
         });
         eleventyConfig.addNunjucksTag(tags[1], function(nunjucks) {
-            this.tags = tags[1];
-            this.parse = parsers.nunjucks;
-            this.run = (...args) => new nunjucks.runtime.SafeString(makeIcons(...args));
+            return new function () {
+                this.tags = [ tags[1] ];
+                this.parse = parsers.nunjucks;
+                this.run = (...args) => new nunjucks.runtime.SafeString(makeIcons(...args));
+            }
         });
     }
 }
