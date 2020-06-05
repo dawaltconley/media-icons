@@ -1,5 +1,6 @@
 node_modules/
 dist/
+eleventy/_site/
 .DS_Store
 *~
 *.swp
