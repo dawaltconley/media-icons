@@ -1,0 +1,93 @@
+- type: email
+  label: Email Address
+  color: '#d14836'
+  fa:
+    default: 'envelope'
+    square: 'envelope-square'
+- type: phone
+  label: Phone Number
+  color: '#45a145'
+  fa:
+    default: 'phone'
+    square: 'phone-square'
+- type: location
+  label: Location
+  color: '#208000'
+  fa:
+    default: 'map-marker-alt'
+- type: google-plus
+  label: Google Plus
+  color: '#dd4b39'
+  brand: true
+  fa:
+    default: 'google-plus'
+    square: 'google-plus-square'
+    simple: 'google-plus-g'
+- type: facebook
+  label: Facebook
+  color: '#3b5998'
+  brand: true
+  fa:
+    default: 'facebook'
+    square: 'facebook-square'
+    simple: 'facebook-f'
+- type: twitter
+  label: Twitter
+  color: '#1da1f2'
+  brand: true
+  fa:
+    default: 'twitter'
+    square: 'twitter-square'
+- type: youtube
+  label: YouTube
+  color: '#cd201f'
+  brand: true
+  fa:
+    default: 'youtube'
+    square: 'youtube-square'
+- type: linkedin
+  label: LinkedIn
+  color: '#0077b5'
+  brand: true
+  fa:
+    default: 'linkedin'
+    simple: 'linkedin-in'
+- type: vimeo
+  label: Vimeo
+  color: '#1ab7ea'
+  brand: true
+  fa:
+    default: 'vimeo'
+    square: 'vimeo-square'
+    simple: 'vimeo-v'
+- type: instagram
+  label: Instagram
+  color: '#c13584'
+  brand: true
+  fa:
+    default: 'instagram'
+- type: bandcamp
+  label: Bandcamp
+  color: '#629aa9'
+  brand: true
+  fa:
+    default: 'bandcamp'
+- type: soundcloud
+  label: SoundCloud
+  color: '#ff8800'
+  brand: true
+  fa:
+    default: 'soundcloud'
+- type: spotify
+  label: Spotify
+  color: '#1db954'
+  brand: true
+  fa:
+    default: 'spotify'
+- type: apple_music
+  label: Apple Music
+  color: 'inherit'
+  brand: true
+  fa:
+    default: 'itunes-note'
+    square: 'itunes'

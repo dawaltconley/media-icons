@@ -1,0 +1,25 @@
+{
+  "name": "@dawaltconley/media-icons",
+  "version": "0.1.0",
+  "description": "A custom nunjucks tag for easily adding social / contact icon links.",
+  "files": [
+    "dist"
+  ],
+  "main": "tags.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "publish": "node build; npm publish --access=public"
+  },
+  "keywords": [
+    "icons",
+    "nunjucks"
+  ],
+  "author": "Dylan Awalt-Conley",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^7.1.0",
+    "js-yaml": "^3.14.0",
+    "node-sass": "^4.14.1",
+    "node-sass-utils": "^1.1.3"
+  }
+}
