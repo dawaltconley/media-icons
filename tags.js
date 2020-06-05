@@ -16,6 +16,10 @@ module.exports = class iconTags {
                 return new nodes.CallExtension(this, "run", args);
             }
         }
+
+        this.makeIcon = this.makeIcon.bind(this);
+        this.makeIcons = this.makeIcons.bind(this);
+        this.nunjucks = this.nunjucks.bind(this);
     }
 
     makeIcon (context, type, link, kwargs={}) {
