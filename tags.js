@@ -47,7 +47,7 @@ module.exports = class iconTags {
         try {
             href = new URL(link).href;
         } catch(e) {
-            if (e.name !== 'TypeError [ERR_INVALID_URL]')
+            if (e.code !== 'ERR_INVALID_URL')
                 throw e;
             if (type === 'email') {
                 href = link.match(/^mailto:/) ? link : 'mailto:' + link;
