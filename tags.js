@@ -38,10 +38,8 @@ module.exports = class iconTags {
 
         if (typeof data === 'string')
             data = context[data]
-        const icon = {
-            ...data.find(i => i.type === type),
-            label: kwargs.label,
-        }
+        const icon = data.find(i => i.type === type);
+
         if (!icon.type)
             throw new Error(`No data for icon of type ${type}.`);
 
