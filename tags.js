@@ -112,7 +112,7 @@ module.exports = class iconTags {
         if (typeof icons === 'string')
             icons = context[icons];
         if (icons instanceof Object)
-            set = Object.entries(icons);
+            icons = Object.entries(icons);
         if (icons instanceof Array && icons.every(i => i instanceof Array && i.length === 2))
             set = icons.reduce((a, i) => [...a, { type: i[0], link: i[1] }], []);
 
