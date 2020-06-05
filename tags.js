@@ -62,7 +62,7 @@ module.exports = class iconTags {
 
         let alt, analyticsCatagory;
         if (['email', 'phone'].includes(type)) {
-            alt = icon.label.replace(/^./, l => l.toUpperCase()) + 'link';
+            alt = icon.label.replace(/^./, l => l.toUpperCase()) + ' link';
             analyticsCatagory = 'Contact Link';
         } else {
             alt = `Visit our ${icon.label} page`;
