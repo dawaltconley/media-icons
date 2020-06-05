@@ -23,7 +23,7 @@ module.exports = class iconTags {
     }
 
     makeIcon (context, type, link, kwargs={}) {
-        if (kwargs.__keywords !== true)
+        if (kwargs.__keywords && kwargs.__keywords !== true)
             throw new Error('Icon tag only takes a type and a link; found third positional arg.');
         let {
             data = this.types,
@@ -94,7 +94,7 @@ module.exports = class iconTags {
             else if (type === 'phone')
                 html += ' itemprop="telephone"';
         }
-        if (context.site.google_analytics)
+        if (context.site && context.site.google_analytics)
             html += ` data-analytics-catagory="${analyticsCatagory}" data-analytics-action="click" data-analytics-label="${analyticsLabel}"` 
         if (!showLink)
             html += ` aria-label="${alt}"`
@@ -107,7 +107,7 @@ module.exports = class iconTags {
     }
 
     makeIcons (context, icons, kwargs={}) {
-        if (kwargs.__keywords !== true)
+        if (kwargs.__keywords && kwargs.__keywords !== true)
             throw new Error('Icons tag only takes a type and a link; found third positional arg.');
 
         let set = icons;
