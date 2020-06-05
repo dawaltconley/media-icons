@@ -8,7 +8,8 @@
   "main": "tags.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "publish": "node build; npm publish --access=public"
+    "publish": "rm -r dist; node build; npm publish --access=public",
+    "serve": "node build; npx eleventy --serve"
   },
   "keywords": [
     "icons",
