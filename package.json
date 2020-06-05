@@ -11,6 +11,10 @@
     "publish": "rm -r dist; node build; npm publish --access=public",
     "serve": "node build; npx eleventy --serve"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dawaltconley/media-icons.git"
+  },
   "keywords": [
     "icons",
     "nunjucks"
