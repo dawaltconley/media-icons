@@ -8,7 +8,7 @@
   "main": "tags.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "publish": "rm -r dist; node build; npm publish --access=public",
+    "prepublishOnly": "rm -r dist; node build",
     "serve": "node build; npx eleventy --serve"
   },
   "repository": {
