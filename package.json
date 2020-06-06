@@ -7,7 +7,7 @@
   ],
   "main": "tags.js",
   "scripts": {
-    "test": "node build; npx eleventy",
+    "test": "node test",
     "prepublishOnly": "rm -r dist; node build",
     "serve": "node build; npx eleventy --serve"
   },
