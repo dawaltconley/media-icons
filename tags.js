@@ -104,20 +104,20 @@ module.exports = class iconTags {
         return html
     }
 
-    makeIcons (context, icons, kwargs={}) {
+    makeIcons (context, iconSet, kwargs={}) {
         if (kwargs.__keywords && kwargs.__keywords !== true)
             throw new Error('Icons tag only takes a type and a link; found third positional arg.');
 
-        let set = icons;
+        let icons = iconSet;
         if (typeof icons === 'string')
             icons = context[icons];
-        if (icons instanceof Object)
+        if (icons instanceof Object && !(icons instanceof Array))
             icons = Object.entries(icons);
         if (icons instanceof Array && icons.every(i => i instanceof Array && i.length === 2))
-            set = icons.reduce((a, i) => [...a, { type: i[0], link: i[1] }], []);
+            icons = icons.reduce((a, i) => [...a, { type: i[0], link: i[1] }], []);
 
         let html = '';
-        for (const { type, link } of set) {
+        for (const { type, link } of icons) {
             if (!link) continue;
             let iconHTML = this.makeIcon(context, type, link, kwargs);
             if (kwargs.list)
