@@ -3,9 +3,19 @@ const { join:p } = require('path');
 const iconTypes = require(p(__dirname, 'dist', 'icon-types.json'));
 
 module.exports = class iconTags {
-    constructor (data=iconTypes, { tags }={}) {
+    constructor ({ tagName='icon', data=iconTypes }={}) {
         this.types = data;
-        this.tags = tags || ['icon', 'icons' ];
+        if (tagName instanceof Object && Object.keys(tagName) === [ 'single', 'multi' ]) {
+            this.tags = { single: 'icon', ...tagName };
+        } else if (tagName instanceof Array) {
+            this.tags = { single: tagName[0], multi: tagName[1] };
+        } else if (typeof tagName === 'string') {
+            this.tags = { single: tagName };
+        } else {
+            throw new TypeError(`Invalid option 'tagName', was ${tagName}`)
+        }
+        this.tags.multi = this.tags.multi || this.tags.single+'s';
+
         this.parsers = {
             nunjucks: function (parser, nodes) {
                 const tok = parser.nextToken();
@@ -15,7 +25,7 @@ module.exports = class iconTags {
 
                 return new nodes.CallExtension(this, "run", args);
             }
-        }
+        };
 
         this.makeIcon = this.makeIcon.bind(this);
         this.makeIcons = this.makeIcons.bind(this);
@@ -130,16 +140,16 @@ module.exports = class iconTags {
 
     nunjucks (eleventyConfig) {
         const { tags, parsers, makeIcon, makeIcons } = this;
-        eleventyConfig.addNunjucksTag(tags[0], function (nunjucks) {
+        eleventyConfig.addNunjucksTag(tags.single, function (nunjucks) {
             return new function () {
-                this.tags = [ tags[0] ];
+                this.tags = [ tags.single ];
                 this.parse = parsers.nunjucks;
                 this.run = (...args) => new nunjucks.runtime.SafeString(makeIcon(...args));
             }
         });
-        eleventyConfig.addNunjucksTag(tags[1], function(nunjucks) {
+        eleventyConfig.addNunjucksTag(tags.multi, function(nunjucks) {
             return new function () {
-                this.tags = [ tags[1] ];
+                this.tags = [ tags.multi ];
                 this.parse = parsers.nunjucks;
                 this.run = (...args) => new nunjucks.runtime.SafeString(makeIcons(...args));
             }
