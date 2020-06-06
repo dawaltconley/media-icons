@@ -16,4 +16,7 @@ if (!fs.existsSync(p(dist)))
     fs.mkdirSync(p(dist));
 fs.writeFileSync(p(dist, '_icons.scss'), sassData);
 fs.writeFileSync(p(dist, 'icons.css'), sass.renderSync({ data: sassData }).css);
-fs.writeFileSync(p(dist, 'icon-types.json'), JSON.stringify(iconTypes));
+
+const data = JSON.stringify(iconTypes);
+fs.writeFileSync(p(dist, 'icon-types.json'), data);
+fs.writeFileSync(p('eleventy', '_data', 'generated', 'iconTypes.json'), data);

@@ -1,6 +1,7 @@
 node_modules/
 dist/
 eleventy/_site/
+eleventy/_data/generated/
 .DS_Store
 *~
 *.swp
