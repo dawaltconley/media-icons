@@ -54,7 +54,7 @@ module.exports = class iconTags {
             } else if (type === 'phone') {
                 href = 'tel:' + link.replace(/^tel:/, '').replace(/[ -().]/g, '');
             } else if (type === 'twitter') {
-                href = 'https://twitter.com/' + href.replace(/^@/, '');
+                href = 'https://twitter.com/' + link.replace(/^@/, '');
             } else {
                 throw e;
             }
