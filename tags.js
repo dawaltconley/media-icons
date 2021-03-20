@@ -32,8 +32,8 @@ module.exports = class iconTags {
         this.nunjucks = this.nunjucks.bind(this);
     }
 
-    makeIcon (context, type, link, kwargs={}) {
-        if (kwargs.__keywords && kwargs.__keywords !== true)
+    makeIcon (context, type, link, kwargs) {
+        if (kwargs && kwargs.__keywords !== true)
             throw new Error('Icon tag only takes a type and a link; found third positional arg.');
         let {
             data = this.types,
@@ -44,7 +44,7 @@ module.exports = class iconTags {
             microdata = false,
             newTab = type === 'phone',
             analytics:analyticsLabel
-        } = kwargs;
+        } = kwargs || {};
 
         if (typeof data === 'string')
             data = context[data]
@@ -114,8 +114,8 @@ module.exports = class iconTags {
         return html
     }
 
-    makeIcons (context, iconSet, kwargs={}) {
-        if (kwargs.__keywords && kwargs.__keywords !== true)
+    makeIcons (context, iconSet, kwargs) {
+        if (kwargs && kwargs.__keywords !== true)
             throw new Error('Icons tag only takes a type and a link; found third positional arg.');
 
         let icons = iconSet;
@@ -130,7 +130,7 @@ module.exports = class iconTags {
         for (const { type, link } of icons) {
             if (!link) continue;
             let iconHTML = this.makeIcon(context, type, link, kwargs);
-            if (kwargs.list)
+            if (kwargs && kwargs.list)
                 iconHTML = `<li>${iconHTML}</li>`;
             html += iconHTML;
         }
