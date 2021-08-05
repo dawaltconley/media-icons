@@ -19,4 +19,5 @@ fs.writeFileSync(p(dist, 'icons.css'), sass.renderSync({ data: sassData }).css);
 
 const data = JSON.stringify(iconTypes);
 fs.writeFileSync(p(dist, 'icon-types.json'), data);
+fs.mkdirSync(p('eleventy', '_data', 'generated'), { recursive: true });
 fs.writeFileSync(p('eleventy', '_data', 'generated', 'iconTypes.json'), data);
