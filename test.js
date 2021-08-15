@@ -7,9 +7,24 @@ const p = (...args) => path.join(__dirname, ...args);
 
 fs.rmdirSync(p('dist'), { recursive: true });
 
+const compare = [
+    [
+        p('eleventy', '_site', 'index.html'),
+        p('test', 'test.html')
+    ], [
+        p('dist', 'icons.css'),
+        p('test', 'icons.css')
+    ], [
+        p('dist', '_icons.scss'),
+        p('test', '_icons.scss')
+    ]
+];
+
 child.exec('node build; npx eleventy', (err) => {
     if (err) throw err;
-    const result = fs.readFileSync(p('eleventy', '_site', 'index.html')).toString();
-    const test = fs.readFileSync(p('test.html')).toString();
-    assert.strictEqual(result, test);
+    compare.forEach(pair => {
+        const output = fs.readFileSync(pair[0]).toString();
+        const expected = fs.readFileSync(pair[1]).toString();
+        assert.strictEqual(output, expected);
+    });
 });
