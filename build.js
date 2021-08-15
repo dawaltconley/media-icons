@@ -4,7 +4,7 @@ const sass = require('node-sass');
 const sassUtils = require('node-sass-utils')(sass);
 const { join } = require('path');
 
-const p = (...args) => join(__dirname, ...args)
+const p = (...args) => join(__dirname, ...args);
 const dist = 'dist';
 const iconTypes =  yaml.safeLoad(fs.readFileSync(p('icon-types.yml')).toString());
 

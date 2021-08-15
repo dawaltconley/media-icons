@@ -12,7 +12,7 @@ module.exports = class iconTags {
         } else if (typeof tagName === 'string') {
             this.tags = { single: tagName };
         } else {
-            throw new TypeError(`Invalid option 'tagName', was ${tagName}`)
+            throw new TypeError(`Invalid option 'tagName', was ${tagName}`);
         }
         this.tags.multi = this.tags.multi || this.tags.single+'s';
 
@@ -47,7 +47,7 @@ module.exports = class iconTags {
         } = kwargs;
 
         if (typeof data === 'string')
-            data = context[data]
+            data = context[data];
         const icon = data.find(i => i.type === type);
 
         if (!icon.type)
@@ -103,15 +103,15 @@ module.exports = class iconTags {
                 html += ' itemprop="telephone"';
         }
         if (context.site && context.site.google_analytics)
-            html += ` data-analytics-catagory="${analyticsCatagory}" data-analytics-action="click" data-analytics-label="${analyticsLabel}"` 
+            html += ` data-analytics-catagory="${analyticsCatagory}" data-analytics-action="click" data-analytics-label="${analyticsLabel}"`; 
         if (!showLink)
-            html += ` aria-label="${alt}"`
-        html += ` href="${href}"><i class="fa-icon ${faStyle} fa-${faClass} no-select${list ? ' fa-li' : ''}" aria-hidden="true"></i>`
+            html += ` aria-label="${alt}"`;
+        html += ` href="${href}"><i class="fa-icon ${faStyle} fa-${faClass} no-select${list ? ' fa-li' : ''}" aria-hidden="true"></i>`;
         if (showLink)
-            html += `<span class="media-icon-text">${linkText}</span>`
-        html += '</a>'
+            html += `<span class="media-icon-text">${linkText}</span>`;
+        html += '</a>';
 
-        return html
+        return html;
     }
 
     makeIcons (context, iconSet, kwargs={}) {
@@ -145,14 +145,14 @@ module.exports = class iconTags {
                 this.tags = [ tags.single ];
                 this.parse = parsers.nunjucks;
                 this.run = (...args) => new nunjucks.runtime.SafeString(makeIcon(...args));
-            }
+            };
         });
         eleventyConfig.addNunjucksTag(tags.multi, function(nunjucks) {
             return new function () {
                 this.tags = [ tags.multi ];
                 this.parse = parsers.nunjucks;
                 this.run = (...args) => new nunjucks.runtime.SafeString(makeIcons(...args));
-            }
+            };
         });
     }
-}
+};
