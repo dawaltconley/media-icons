@@ -1,6 +1,6 @@
 {
   "name": "@dawaltconley/media-icons",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A custom nunjucks tag for easily adding social / contact icon links.",
   "files": [
     "dist"
