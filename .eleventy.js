@@ -3,13 +3,13 @@ const path = require('path');
 const p = (...args) => path.join(__dirname, ...args);
 const MediaIcons = require(p('tags.js'));
 
-const customIconTags = new MediaIcons().nunjucks;
+const customIconTags = new MediaIcons().eleventy;
 
 module.exports = eleventyConfig => {
     eleventyConfig.addDataExtension('yml', data => yaml.safeLoad(data));
 
     eleventyConfig.addPassthroughCopy({ 'dist/icons.css': 'css/icons.css' });
-    customIconTags(eleventyConfig);
+    eleventyConfig.addPlugin(customIconTags);
 
     return {
         dir: {

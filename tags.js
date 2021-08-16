@@ -1,5 +1,6 @@
 const { URL } = require('url');
 const { join:p } = require('path');
+const argParse = require('liquid-args');
 const iconTypes = require(p(__dirname, 'dist', 'icon-types.json'));
 
 module.exports = class iconTags {
@@ -24,12 +25,15 @@ module.exports = class iconTags {
                 parser.advanceAfterBlockEnd(tok.value);
 
                 return new nodes.CallExtension(this, "run", args);
+            },
+            liquid: function (tagToken) {
+                this.args = tagToken.args;
             }
         };
 
         this.makeIcon = this.makeIcon.bind(this);
         this.makeIcons = this.makeIcons.bind(this);
-        this.nunjucks = this.nunjucks.bind(this);
+        this.eleventy = this.eleventy.bind(this);
     }
 
     makeIcon (context, type, link, kwargs={}) {
@@ -138,20 +142,42 @@ module.exports = class iconTags {
         return html;
     }
 
-    nunjucks (eleventyConfig) {
+    eleventy (eleventyConfig) {
         const { tags, parsers, makeIcon, makeIcons } = this;
         eleventyConfig.addNunjucksTag(tags.single, function (nunjucks) {
             return new function () {
                 this.tags = [ tags.single ];
                 this.parse = parsers.nunjucks;
-                this.run = (...args) => new nunjucks.runtime.SafeString(makeIcon(...args));
+                this.run = (context, ...args) =>
+                    new nunjucks.runtime.SafeString(makeIcon(context.ctx, ...args));
             };
         });
         eleventyConfig.addNunjucksTag(tags.multi, function(nunjucks) {
             return new function () {
                 this.tags = [ tags.multi ];
                 this.parse = parsers.nunjucks;
-                this.run = (...args) => new nunjucks.runtime.SafeString(makeIcons(...args));
+                this.run = (context, ...args) =>
+                    new nunjucks.runtime.SafeString(makeIcons(context.ctx, ...args));
+            };
+        });
+        eleventyConfig.addLiquidTag(tags.single, function (liquidEngine) {
+            return {
+                parse: parsers.liquid,
+                render: async function (scope) {
+                    const evalValue = arg => liquidEngine.evalValue(arg, scope);
+                    const args = await Promise.all(argParse(this.args, evalValue));
+                    return makeIcon(scope.contexts[0], ...args);
+                }
+            };
+        });
+        eleventyConfig.addLiquidTag(tags.multi, function (liquidEngine) {
+            return {
+                parse: parsers.liquid,
+                render: async function (scope) {
+                    const evalValue = arg => liquidEngine.evalValue(arg, scope);
+                    const args = await Promise.all(argParse(this.args, evalValue));
+                    return makeIcons(scope.contexts[0], ...args);
+                }
             };
         });
     }
