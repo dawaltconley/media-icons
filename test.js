@@ -12,6 +12,9 @@ const compare = [
         p('eleventy', '_site', 'index.html'),
         p('test', 'test.html')
     ], [
+        p('eleventy', '_site', 'liquid', 'index.html'),
+        p('test', 'test.html')
+    ], [
         p('dist', 'icons.css'),
         p('test', 'icons.css')
     ], [
