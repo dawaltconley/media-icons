@@ -22,12 +22,8 @@
     <p class="media-icon-basic">
     {% icon 'phone', '+1 (555) 555-5555' %}
     </p>
-    {% set allContacts = [] %}
-    {% for i in generated.iconTypes %}
-      {% set allContacts = (allContacts.push({ type: i.type, link: 'https://example.com' }), allContacts) %}
-    {% endfor %}
     <p class="media-icon-shutter media-icon-bloat">
-    {% icons allContacts %}
+    {% icons testContacts %}
     </p>
   </body>
 </html>
