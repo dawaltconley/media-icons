@@ -8,8 +8,9 @@
   "main": "tags.js",
   "scripts": {
     "test": "node test",
+    "eleventy": "npx @11ty/eleventy",
     "prepublishOnly": "rm -r dist; node build",
-    "serve": "node build; npx eleventy --serve"
+    "serve": "node build; npx @11ty/eleventy --serve"
   },
   "repository": {
     "type": "git",
