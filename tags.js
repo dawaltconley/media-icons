@@ -3,37 +3,29 @@ const { join:p } = require('path');
 const argParse = require('liquid-args');
 const iconTypes = require(p(__dirname, 'dist', 'icon-types.json'));
 
-module.exports = class iconTags {
-    constructor ({ tagName='icon', data=iconTypes }={}) {
+class MediaIcons {
+    constructor ({ data=iconTypes }={}) {
         this.types = data;
-        if (tagName instanceof Object && Object.keys(tagName) === [ 'single', 'multi' ]) {
-            this.tags = { single: 'icon', ...tagName };
-        } else if (tagName instanceof Array) {
-            this.tags = { single: tagName[0], multi: tagName[1] };
-        } else if (typeof tagName === 'string') {
-            this.tags = { single: tagName };
-        } else {
-            throw new TypeError(`Invalid option 'tagName', was ${tagName}`);
-        }
-        this.tags.multi = this.tags.multi || this.tags.single+'s';
-
-        this.parsers = {
-            nunjucks: function (parser, nodes) {
-                const tok = parser.nextToken();
-
-                const args = parser.parseSignature(null, true);
-                parser.advanceAfterBlockEnd(tok.value);
-
-                return new nodes.CallExtension(this, "run", args);
-            },
-            liquid: function (tagToken) {
-                this.args = tagToken.args;
-            }
-        };
-
+        this.parseTags = this.parseTags.bind(this);
         this.makeIcon = this.makeIcon.bind(this);
         this.makeIcons = this.makeIcons.bind(this);
-        this.eleventy = this.eleventy.bind(this);
+        this.nunjucks = this.nunjucks.bind(this);
+        this.liquid = this.liquid.bind(this);
+    }
+
+    parseTags(tag) {
+        let tags = {};
+        if (tag instanceof Object && Object.keys(tag) === [ 'single', 'multi' ]) {
+            tags = { single: 'icon', ...tag };
+        } else if (tag instanceof Array) {
+            tags = { single: tag[0], multi: tag[1] };
+        } else if (typeof tag === 'string') {
+            tags = { single: tag };
+        } else {
+            throw new TypeError(`Couldn't parse tag, was ${tag}`);
+        }
+        tags.multi = tags.multi || tags.single+'s';
+        return tags;
     }
 
     makeIcon (context, type, link, kwargs={}) {
@@ -142,43 +134,72 @@ module.exports = class iconTags {
         return html;
     }
 
-    eleventy (eleventyConfig) {
-        const { tags, parsers, makeIcon, makeIcons } = this;
-        eleventyConfig.addNunjucksTag(tags.single, function (nunjucks) {
-            return new function () {
-                this.tags = [ tags.single ];
-                this.parse = parsers.nunjucks;
-                this.run = (context, ...args) =>
-                    new nunjucks.runtime.SafeString(makeIcon(context.ctx, ...args));
+    nunjucks (tag='icon') {
+        const { makeIcon, makeIcons } = this;
+        const tags = this.parseTags(tag);
+        const tagFuncs = {};
+
+        for (let type in tags) {
+            const make = type === 'single' ? makeIcon : makeIcons;
+            const tagName = tags[type];
+            tagFuncs[tagName] = function (nunjucks) {
+                return new function () {
+                    this.tags = [ tagName ];
+                    this.parse = function (parser, nodes) {
+                        const tok = parser.nextToken();
+                        const args = parser.parseSignature(null, true);
+                        parser.advanceAfterBlockEnd(tok.value);
+                        return new nodes.CallExtension(this, "run", args);
+                    };
+                    this.run = (context, ...args) =>
+                        new nunjucks.runtime.SafeString(make(context.ctx, ...args));
+                };
             };
-        });
-        eleventyConfig.addNunjucksTag(tags.multi, function(nunjucks) {
-            return new function () {
-                this.tags = [ tags.multi ];
-                this.parse = parsers.nunjucks;
-                this.run = (context, ...args) =>
-                    new nunjucks.runtime.SafeString(makeIcons(context.ctx, ...args));
+        }
+
+        return tagFuncs;
+    }
+
+    liquid (tag='icon') {
+        const { makeIcon, makeIcons } = this;
+        const tags = this.parseTags(tag);
+        const tagFuncs = {};
+
+        for (let type in tags) {
+            const make = type === 'single' ? makeIcon : makeIcons;
+            const tagName = tags[type];
+            tagFuncs[tagName] = function (liquidEngine) {
+                return {
+                    parse: function (tagToken) {
+                        this.args = tagToken.args;
+                    },
+                    render: async function (scope) {
+                        const evalValue = arg => liquidEngine.evalValue(arg, scope);
+                        const args = await Promise.all(argParse(this.args, evalValue));
+                        return make(scope.contexts[0], ...args);
+                    }
+                };
             };
-        });
-        eleventyConfig.addLiquidTag(tags.single, function (liquidEngine) {
-            return {
-                parse: parsers.liquid,
-                render: async function (scope) {
-                    const evalValue = arg => liquidEngine.evalValue(arg, scope);
-                    const args = await Promise.all(argParse(this.args, evalValue));
-                    return makeIcon(scope.contexts[0], ...args);
-                }
-            };
-        });
-        eleventyConfig.addLiquidTag(tags.multi, function (liquidEngine) {
-            return {
-                parse: parsers.liquid,
-                render: async function (scope) {
-                    const evalValue = arg => liquidEngine.evalValue(arg, scope);
-                    const args = await Promise.all(argParse(this.args, evalValue));
-                    return makeIcons(scope.contexts[0], ...args);
-                }
-            };
-        });
+        }
+
+        return tagFuncs;
+    }
+}
+
+module.exports = MediaIcons;
+
+module.exports.eleventy = (eleventyConfig, config={}) => {
+    let {
+        tagName = 'icon',
+        ...options
+    } = config;
+    const icons = new MediaIcons(options);
+    let nunjucksTags = icons.nunjucks(tagName);
+    let liquidTags = icons.liquid(tagName);
+    for (let tag in nunjucksTags) {
+        eleventyConfig.addNunjucksTag(tag, nunjucksTags[tag]);
+    }
+    for (let tag in liquidTags) {
+        eleventyConfig.addLiquidTag(tag, liquidTags[tag]);
     }
 };
