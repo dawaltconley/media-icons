@@ -23,7 +23,7 @@ const compare = [
     ]
 ];
 
-child.exec('node build; npx eleventy', (err) => {
+child.exec('node build; npx @11ty/eleventy', (err) => {
     if (err) throw err;
     compare.forEach(pair => {
         const output = fs.readFileSync(pair[0]).toString();
