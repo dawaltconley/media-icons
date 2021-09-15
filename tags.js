@@ -188,6 +188,8 @@ class MediaIcons {
 
 module.exports = MediaIcons;
 
+module.exports.types = iconTypes;
+
 module.exports.eleventy = (eleventyConfig, config={}) => {
     let {
         tagName = 'icon',
