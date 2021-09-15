@@ -24,7 +24,7 @@
   "license": "ISC",
   "devDependencies": {
     "@11ty/eleventy": "^0.12.1",
-    "eslint": "^7.1.0",
+    "eslint": "^7.32.0",
     "js-yaml": "^3.14.0",
     "node-sass": "^6.0.1",
     "node-sass-utils": "^1.1.3",
