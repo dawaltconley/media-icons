@@ -10,12 +10,19 @@
       p {
         transition: .3s;
       }
+      .vertical {
+        display: flex;
+        flex-direction: column;
+      }
     </style>
   </head>
   <body style="font-size: 3rem">
     <p class="media-icon-button media-icon-list">
     <a class="media-icon email-icon" aria-label="Email Address link" href="mailto:web@dylan.ac"><i class="fa-icon fas fa-envelope no-select" aria-hidden="true"></i></a><a class="media-icon phone-icon" target="_blank" aria-label="Phone Number link" href="tel:+1-202-456-1111"><i class="fa-icon fas fa-phone no-select" aria-hidden="true"></i></a><a class="media-icon linkedin-icon" aria-label="Visit our LinkedIn page" href="https://www.linkedin.com/"><i class="fa-icon fab fa-linkedin no-select" aria-hidden="true"></i></a><a class="media-icon instagram-icon" aria-label="Visit our Instagram page" href="https://www.instagram.com/"><i class="fa-icon fab fa-instagram no-select" aria-hidden="true"></i></a>
     </p>
+    <ul class="media-icon-basic media-icon-list vertical fa-ul">
+      <li><a class="media-icon email-icon" href="mailto:web@dylan.ac"><span class="fa-li"><i class="fa-icon fas fa-envelope no-select" aria-hidden="true"></i></span><span class="media-icon-text">web@dylan.ac</span></a></li><li><a class="media-icon phone-icon" target="_blank" href="tel:+1-202-456-1111"><span class="fa-li"><i class="fa-icon fas fa-phone no-select" aria-hidden="true"></i></span><span class="media-icon-text">(202) 456-1111</span></a></li><li><a class="media-icon linkedin-icon" href="https://www.linkedin.com/"><span class="fa-li"><i class="fa-icon fab fa-linkedin no-select" aria-hidden="true"></i></span><span class="media-icon-text">https://www.linkedin.com/</span></a></li><li><a class="media-icon instagram-icon" href="https://www.instagram.com/"><span class="fa-li"><i class="fa-icon fab fa-instagram no-select" aria-hidden="true"></i></span><span class="media-icon-text">https://www.instagram.com/</span></a></li>
+    </ul>
     <p class="media-icon-circle">
     <a class="media-icon twitter-icon" aria-label="Visit our Twitter page" href="https://twitter.com/dawaltco"><i class="fa-icon fab fa-twitter no-select" aria-hidden="true"></i></a>
     </p>

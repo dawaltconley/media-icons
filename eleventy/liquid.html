@@ -13,12 +13,19 @@ templateEngineOverride: liquid
       p {
         transition: .3s;
       }
+      .vertical {
+        display: flex;
+        flex-direction: column;
+      }
     </style>
   </head>
   <body style="font-size: 3rem">
     <p class="media-icon-button media-icon-list">
     {% icons contact %}
     </p>
+    <ul class="media-icon-basic media-icon-list vertical fa-ul">
+      {% icons contact, list=true, faList=true, showLink=true %}
+    </ul>
     <p class="media-icon-circle">
     {% icon 'twitter', '@dawaltco' %}
     </p>

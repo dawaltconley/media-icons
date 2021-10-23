@@ -117,16 +117,16 @@
 .media-icon-text {
   margin-left: .25em; }
 
-ul.media-icon-basic,
-ul.media-icon-button,
-ul.media-icon-circle,
-ul.media-icon-shutter {
+ul.media-icon-basic:not(.fa-ul),
+ul.media-icon-button:not(.fa-ul),
+ul.media-icon-circle:not(.fa-ul),
+ul.media-icon-shutter:not(.fa-ul) {
   margin-left: 0;
   list-style: none; }
-  ul.media-icon-basic > li,
-  ul.media-icon-button > li,
-  ul.media-icon-circle > li,
-  ul.media-icon-shutter > li {
+  ul.media-icon-basic:not(.fa-ul) > li,
+  ul.media-icon-button:not(.fa-ul) > li,
+  ul.media-icon-circle:not(.fa-ul) > li,
+  ul.media-icon-shutter:not(.fa-ul) > li {
     display: inline-block;
     transition: inherit; }
 
