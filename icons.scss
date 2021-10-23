@@ -84,12 +84,14 @@ ul.media-icon-basic,
 ul.media-icon-button,
 ul.media-icon-circle,
 ul.media-icon-shutter {
-    margin-left: 0;
-    list-style: none;
+    &:not(.fa-ul) {
+        margin-left: 0;
+        list-style: none;
 
-    & > li {
-        display: inline-block;
-        transition: inherit;
+        & > li {
+            display: inline-block;
+            transition: inherit;
+        }
     }
 }
 

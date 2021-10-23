@@ -36,6 +36,7 @@ class MediaIcons {
             data = this.types,
             style = '',
             linkText = link,
+            faList = false,
             showLink = false,
             microdata = false,
             newTab = type === 'phone',
@@ -110,8 +111,12 @@ class MediaIcons {
             html += ` data-analytics-catagory="${analyticsCatagory}" data-analytics-action="click" data-analytics-label="${analyticsLabel}"`; 
         if (!showLink)
             html += ` aria-label="${alt}"`;
-        html += ` href="${href}"><i class="fa-icon ${faStyle} fa-${faClass} no-select" aria-hidden="true"></i>`;
-        if (showLink)
+        html += ` href="${href}">`;
+        let iElement = `<i class="fa-icon ${faStyle} fa-${faClass} no-select" aria-hidden="true"></i>`;
+        if (faList) // wrap icon in span with fa-li class
+            iElement = `<span class="fa-li">${iElement}</span>`;
+        html += iElement;
+        if (showLink) // add link text following icon
             html += `<span class="media-icon-text">${linkText}</span>`;
         html += '</a>';
 
@@ -134,7 +139,7 @@ class MediaIcons {
         for (const { type, link } of icons) {
             if (!link) continue;
             let iconHTML = this.makeIcon(context, type, link, kwargs);
-            if (kwargs.list)
+            if (kwargs.list || kwargs.faList)
                 iconHTML = `<li>${iconHTML}</li>`;
             html += iconHTML;
         }
