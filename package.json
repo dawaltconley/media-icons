@@ -34,6 +34,7 @@
     "stylelint-scss": "^3.20.1"
   },
   "dependencies": {
+    "awesome-phonenumber": "^2.64.0",
     "liquid-args": "^1.0.0"
   }
 }

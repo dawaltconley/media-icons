@@ -1,6 +1,7 @@
 const { URL } = require('url');
 const { join:p } = require('path');
 const argParse = require('liquid-args');
+const PhoneNumber = require('awesome-phonenumber');
 const iconTypes = require(p(__dirname, 'dist', 'icon-types.json'));
 
 class MediaIcons {
@@ -57,7 +58,15 @@ class MediaIcons {
             if (type === 'email') {
                 href = link.match(/^mailto:/) ? link : 'mailto:' + link;
             } else if (type === 'phone') {
-                href = 'tel:' + link.replace(/^tel:/, '').replace(/[ ().-]/g, '');
+                const pn = new PhoneNumber(link);
+                if (pn.isValid()) {
+                    href = pn.getNumber('rfc3966');
+                    if (linkText === link) {
+                        linkText = pn.getNumber('national');
+                    }
+                } else {
+                    href = 'tel:' + link.replace(/^tel:/, '').replace(/[ ().-]/g, '');
+                }
             } else if (type === 'twitter') {
                 href = 'https://twitter.com/' + link.replace(/^@/, '');
             } else {
