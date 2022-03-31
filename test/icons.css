@@ -101,6 +101,12 @@
   border-color: inherit !important;
 }
 
+.imdb-icon, .imdb-icon:hover {
+  color: #f5de50 !important;
+  background-color: #f5de50 !important;
+  border-color: #f5de50 !important;
+}
+
 .media-icon-circle .media-icon:not(:hover), .media-icon-basic .media-icon:not(:hover) {
   color: inherit !important;
 }

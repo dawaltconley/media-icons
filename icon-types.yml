@@ -91,3 +91,9 @@
   fa:
     default: 'itunes-note'
     square: 'itunes'
+- type: imdb
+  label: IMDB
+  color: '#f5de50'
+  brand: true
+  fa:
+    default: 'imdb'
