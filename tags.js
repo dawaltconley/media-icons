@@ -35,9 +35,9 @@ class MediaIcons {
         let {
             data = this.types,
             style = '',
-            linkText = link,
             faList = false,
             showLink = false,
+            linkText,
             microdata = false,
             newTab = type === 'phone',
             analytics:analyticsLabel
@@ -62,7 +62,7 @@ class MediaIcons {
                 const pn = new PhoneNumber(link);
                 if (pn.isValid()) {
                     href = pn.getNumber('rfc3966');
-                    if (linkText === link) {
+                    if (showLink && linkText === link) {
                         linkText = pn.getNumber('national');
                     }
                 } else {
@@ -77,7 +77,7 @@ class MediaIcons {
 
         let alt, analyticsCatagory;
         if (['email', 'phone'].includes(type)) {
-            alt = icon.label.replace(/^./, l => l.toUpperCase()) + ' link';
+            alt = icon.type.replace(/^./, l => l.toUpperCase()) + ' link';
             analyticsCatagory = 'Contact Link';
         } else {
             alt = `Visit our ${icon.label} page`;
@@ -116,8 +116,19 @@ class MediaIcons {
         if (faList) // wrap icon in span with fa-li class
             iElement = `<span class="fa-li">${iElement}</span>`;
         html += iElement;
-        if (showLink) // add link text following icon
-            html += `<span class="media-icon-text">${linkText}</span>`;
+        if (showLink) { // add link text following icon
+            let showText = linkText || link;
+            if (showLink === 'label') {
+                showText = icon.label;
+            } else if (showLink === 'pretty' || showLink === 'smart') {
+                if (['email', 'phone'].includes(type))
+                    showText = link; // nice phone formatting?
+                else
+                    showText = icon.label;
+            }
+
+            html += `<span class="media-icon-text">${showText}</span>`;
+        }
         html += '</a>';
 
         return html;
