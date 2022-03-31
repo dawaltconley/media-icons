@@ -189,7 +189,7 @@ class MediaIcons {
                     render: async function (scope) {
                         const evalValue = arg => liquidEngine.evalValue(arg, scope);
                         const args = await Promise.all(argParse(this.args, evalValue));
-                        return make(scope.contexts[0], ...args);
+                        return make(scope.environments, ...args);
                     }
                 };
             };
