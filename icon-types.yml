@@ -86,7 +86,7 @@
     default: 'spotify'
 - type: apple_music
   label: Apple Music
-  color: 'inherit'
+  color: null
   brand: true
   fa:
     default: 'itunes-note'

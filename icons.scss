@@ -27,7 +27,7 @@ $circle-size: 1.5 !default;
 @if $icon-types {
     @each $icon in $icon-types {
         $class-name: "#{map-get($icon, type)}-icon";
-        $color: map-get($icon, color);
+        $color: map-get($icon, color) or inherit;
         .#{$class-name} {
             &, &:hover {
                 color: $color !important;

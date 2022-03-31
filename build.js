@@ -1,14 +1,14 @@
 const fs = require('fs');
 const yaml = require('js-yaml');
-const sass = require('node-sass');
-const sassUtils = require('node-sass-utils')(sass);
+const sass = require('sass');
+const { toSass } = require('sass-cast');
 const { join } = require('path');
 
 const p = (...args) => join(__dirname, ...args);
 const dist = 'dist';
 const iconTypes =  yaml.safeLoad(fs.readFileSync(p('icon-types.yml')).toString());
 
-let sassData = sassUtils.sassString(sassUtils.castToSass(iconTypes));
+let sassData = toSass(iconTypes, { parseUnquotedStrings: true });
 sassData = `$icon-types: ${sassData} !default;\n`;
 sassData += fs.readFileSync(p('icons.scss'));
 
