@@ -3,6 +3,7 @@
   "version": "0.5.0",
   "description": "A custom nunjucks tag for easily adding social / contact icon links.",
   "files": [
+    "_index.scss",
     "dist"
   ],
   "main": "tags.js",
